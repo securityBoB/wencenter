@@ -1,0 +1,73 @@
+{extends file="layout/back.html"}
+{block name="content"}
+<div class="aw-content-wrap">
+    <form method="post" id="category_form" action="index.php?m=back&c=Category&a=update">
+        <input type="hidden" value={$category['category_id']} name="category_id">
+        <div class="mod">
+            <div class="mod-head">
+                <h3>
+                    <span class="pull-left">分类编辑</span>
+                </h3>
+            </div>
+            <div class="tab-content mod-content">
+                <table class="table table-striped">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <span class="col-sm-4 col-xs-3 control-label">分类标题:</span>
+                                <div class="col-sm-5 col-xs-8">
+                                    <input type="text" value={$category['category_title']} name="category_title"
+                                           class="form-control">
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <span class="col-sm-4 col-xs-3 control-label">父级分类:</span>
+                                <div class="col-sm-5 col-xs-8">
+                                    <select class="form-control" name="parent_id">
+                                        {foreach $category_tree as $cate}
+                                        <option
+
+                                                {if $category[
+                                        'parent_id'] == $cate['category_id']}
+                                        selected
+
+                                        {/if}
+
+                                        value={$cate['category_id']}>{$cate['category_title']|indent:$cate['deep']:'--'}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <span class="col-sm-4 col-xs-3 control-label">排序:</span>
+                                <div class="col-sm-5 col-xs-8">
+                                    <input type="text" value={$category['sort']} name="sort" class="form-control">
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td>
+                            <input type="submit" onclick="return confirm('确定保存');" class="btn btn-primary center-block"
+                                   value="保存设置">
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </form>
+</div>
+{/block}

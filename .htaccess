@@ -1,0 +1,26 @@
+<IfModule rewrite_module>
+ RewriteEngine On
+
+ RewriteCond %{REQUEST_FILENAME} !-f
+
+ Rewritecond %{REQUEST_FILENAME} !-d
+
+ RewriteRule (.*) index.php/$1
+
+</IfModule>
+
+# 分布式配置文件
+#<IfModule rewrite_module>
+#	#rewrite_module模块存在才执行下面的配置
+#        # 所请求的文件，不存在（所请求的资源不是文件）
+#	# 所请求的目录，不存在（所请求的资源不是目录）
+#	# 所请求的目录，不存在（所请求的资源不是目录）
+#	RewriteEngine On
+#
+#	
+#	RewriteCond %{REQUEST_FILENAME} !-f
+#	
+#	RewriteCond %{REQUEST_FILENAME} !-d
+#	
+#	RewriteRule (.*) index.php/$1
+#</IfModule>

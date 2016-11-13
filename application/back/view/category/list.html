@@ -1,0 +1,98 @@
+{extends file="layout/back.html"}
+{block name="content"}
+<div class="aw-content-wrap">
+    <div class="mod">
+        <div class="mod-head">
+            <h3>
+                <span class="pull-left">分类管理</span>
+            </h3>
+        </div>
+
+        <div class="tab-content mod-body">
+            <div class="alert alert-success hide error_message"></div>
+
+            <div class="table-responsive">
+                <form id="category_form" action="#" method="post" onsubmit="return false"></form>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th style="">分类标题</th>
+                            <th style="">问题数量</th>
+                            <th>排序</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {foreach $category_tree as $category}
+                        <tr>
+                            <td style="text-align: left;" class="">
+                                <a href="#">{$category['category_title']|indent:$category['deep']:"----"}</a>
+                            </td>
+                            <td>
+                                <div class="col-sm-6 clo-xs-12 col-lg-offset-3">{$category['question_count']}</div>
+                            </td>
+                            <td>
+                                <div class="col-sm-6 clo-xs-12 col-lg-offset-3">{$category['sort']}</div>
+                            </td>
+                            <td>
+                                <a data-original-title="编辑"
+								href={framework\core\Factory::U('back/Category/edit',['id'=>$category['category_id']])
+								 } data-toggle="tooltip" class="icon icon-edit md-tip" title=""></a>
+                                <a href="index.php?m=back&c=Category&a=delete&id={$category['category_id']}" data-original-title="移除" data-toggle="tooltip" class="icon icon-trash md-tip" title="" onclick="return confirm('你是认真的吗?');"></a>
+                            </td>
+                        </tr> 
+                        {foreachelse}
+                        <tr>
+                            <td style="text-align: left;" class="" colspan="3">
+                                没有分类，请<a href="index.php?m=back&c=Category&a=add">添加</a>
+                            </td>
+                        </tr>
+                        {/foreach}      
+                    </tbody>
+                    <tfoot class="mod-foot-center">
+                        <tr>
+                            <td colspan="3">
+                                <form id="add_category_form" action="index.php?m=back&c=Category&a=insert" method="post" onsubmit="">
+
+                                    <div class="form-group col-sm-4">
+                                        <span class="col-sm-3 col-xs-12 mod-category-foot">分类标题</span>
+                                        <div class="col-sm-9 col-xs-12">
+                                            <input type="text" class="form-control" name="category_title"></div>
+                                    </div>
+
+                                    <div class="form-group col-sm-4">
+                                        <span class="col-sm-3 col-xs-12 mod-category-foot">父级分类:</span>
+                                        <div class="col-sm-9 col-xs-12">
+                                            <select name="parent_id" class="form-control">
+                                                <option value="0">无</option>
+                                                {foreach $category_tree as $cat}
+                                                <option value="{$cat['category_id']}">{$cat['category_title']|indent:$cat['deep']:"--"}</option>
+                                                {/foreach}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-sm-2">
+                                        <span class="col-sm-3 col-xs-12 mod-category-foot">排序</span>
+                                        <div class="col-sm-9 col-xs-12">
+                                            <input type="text" class="form-control" value="0" name="sort"></div>
+                                    </div>
+
+                                    <div class="form-group col-sm-2 col-xs-12">
+                                        <input type="submit" value="添加分类" class="form-control btn-primary btn">
+                                    </div>
+                                </form>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                
+            </div>
+        </div>
+    </div>
+    <div id="target-category" class="hide">
+        <option value="1">默认分类</option>
+    </div>
+</div>
+
+{/block}
